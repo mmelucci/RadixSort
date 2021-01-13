@@ -13,16 +13,60 @@ public class Radix{
     return ((int) (Math.log10(Math.abs(n)) + 1));
   }
 
-  public static void merge(MyLinkedList original,MyLinkedList[]buckets) {
+
+  // Merge all of the linked lists in the bucket array into your original linked list.
+  // The original may have elements, and those should be kept.
+  // This is O(buckets.length) which should be 10 when we use this later.
+  // The bucket[0] list will be merged first, then the bucket[1] etc.
+  // Write and thoroughly test these methods!
+  public static void merge(SortableLinkedList original, SortableLinkedList[]buckets) {
     for (int i = 0; i < buckets.length; i ++) {
       original.extend(buckets[i]);
     }
 }
 
-// Merge all of the linked lists in the bucket array into your original linked list.
-// The original may have elements, and those should be kept.
-// This is O(buckets.length) which should be 10 when we use this later.
-// The bucket[0] list will be merged first, then the bucket[1] etc.
-// Write and thoroughly test these methods!
+// Write a method that sorts non-negative integer values: [This part is the most important part, and I expect every student can complete it!]
+// Assume there are no negative values.
+// Use the algorithm described in class/class notes
+  public static void radixSortSimple(SortableLinkedList data) {
+    // Create bucket list
+    SortableLinkedList[] buckets = new SortableLinkedList[10];
+    for (int i = 0; i < 10; i ++) {
+      buckets[i] = new SortableLinkedList();
+    }
+  // find maxColumn
+  int maxColumn = 0;
+  int item = 0;
+  int size = data.size();
+  for (int i = 0; i < size; i ++) {
+    if (Radix.length(data.get(i)) > maxColumn) {
+      maxColumn = Radix.length(data.get(i));
+    }
+  }
+  for (int col = 0; col < maxColumn; col ++) {
+  //  for (int j = 0; j < size; j ++) {
+  while (data.size()>0) {
+      item = data.remove(0);
+      // System.out.print("item: ");
+      // System.out.println(item);
+      // System.out.print("Column: ");
+      // System.out.println(col);
+      buckets[Radix.nth(item, col)].add(item);
+    }
+    // for (int i = 0; i < 10; i ++) {
+    //   System.out.println(buckets[i]);
+    // }
+    merge(data, buckets);
+    // System.out.println(data);
+  }
+}
+
+//   6. Write a method that sorts any integer values: [This part can be very easy or not as easy depending how you wrote the first method. It is the least important part, and I expect some students will not complete it.]
+  public static void radixSort(SortableLinkedList data) {
+
+  }
+// We have not discussed a strategy to handle this in class.
+// If you cannot complete this method, make sure the method is present so that the tester will compile!
+
 
 }
