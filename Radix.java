@@ -44,7 +44,6 @@ public class Radix{
     }
   }
   for (int col = 0; col < maxColumn; col ++) {
-  //  for (int j = 0; j < size; j ++) {
   while (data.size()>0) {
       item = data.remove(0);
       // System.out.print("item: ");
@@ -63,10 +62,36 @@ public class Radix{
 
 //   6. Write a method that sorts any integer values: [This part can be very easy or not as easy depending how you wrote the first method. It is the least important part, and I expect some students will not complete it.]
   public static void radixSort(SortableLinkedList data) {
-
+    // Create bucket list
+    SortableLinkedList[] buckets = new SortableLinkedList[10];
+    for (int i = 0; i < 10; i ++) {
+      buckets[i] = new SortableLinkedList();
+    }
+    SortableLinkedList[] negbuckets = new SortableLinkedList[10];
+    for (int i = 0; i < 10; i ++) {
+      negbuckets[i] = new SortableLinkedList();
+    }
+    // find maxColumn
+    int maxColumn = 0;
+    int item = 0;
+    int size = data.size();
+    for (int i = 0; i < size; i ++) {
+    if (Radix.length(data.get(i)) > maxColumn) {
+      maxColumn = Radix.length(data.get(i));
+    }
+    }
+    for (int col = 0; col < maxColumn; col ++) {
+      while (data.size()>0) {
+        item = data.remove(0);
+        if (item >= 0) {
+          buckets[Radix.nth(item, col)].add(item);
+    }
+        else {
+          negbuckets[9-(Radix.nth(item,col))].add(item);
+        }
   }
-// We have not discussed a strategy to handle this in class.
-// If you cannot complete this method, make sure the method is present so that the tester will compile!
-
-
+    merge(data, negbuckets);
+    merge(data, buckets);
+  }
+ }
 }
