@@ -35,14 +35,14 @@ public class Radix{
       buckets[i] = new SortableLinkedList();
     }
   // find maxColumn
-  int maxColumn = 0;
+  int maxColumn = 1;
   int item = 0;
   int size = data.size();
-  for (int i = 0; i < size; i ++) {
-    if (Radix.length(data.get(i)) > maxColumn) {
-      maxColumn = Radix.length(data.get(i));
-    }
-  }
+  // for (int i = 0; i < size; i ++) {
+  //   if (Radix.length(data.get(i)) > maxColumn) {
+  //     maxColumn = Radix.length(data.get(i));
+  //   }
+  // }
   for (int col = 0; col < maxColumn; col ++) {
   while (data.size()>0) {
       item = data.remove(0);
@@ -50,6 +50,9 @@ public class Radix{
       // System.out.println(item);
       // System.out.print("Column: ");
       // System.out.println(col);
+      if (Radix.length(item) > maxColumn) {
+          maxColumn = Radix.length(item);
+        }
       buckets[Radix.nth(item, col)].add(item);
     }
     // for (int i = 0; i < 10; i ++) {
@@ -72,17 +75,20 @@ public class Radix{
       negbuckets[i] = new SortableLinkedList();
     }
     // find maxColumn
-    int maxColumn = 0;
+    int maxColumn = 1;
     int item = 0;
     int size = data.size();
-    for (int i = 0; i < size; i ++) {
-    if (Radix.length(data.get(i)) > maxColumn) {
-      maxColumn = Radix.length(data.get(i));
-    }
-    }
+    // for (int i = 0; i < size; i ++) {
+    //   if (Radix.length(data.get(i)) > maxColumn) {
+    //     maxColumn = Radix.length(data.get(i));
+    //   }
+    // }
     for (int col = 0; col < maxColumn; col ++) {
       while (data.size()>0) {
         item = data.remove(0);
+        if (Radix.length(item) > maxColumn) {
+            maxColumn = Radix.length(item);
+          }
         if (item >= 0) {
           buckets[Radix.nth(item, col)].add(item);
     }
